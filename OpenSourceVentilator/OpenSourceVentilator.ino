@@ -230,7 +230,7 @@
 //*******************************   REQUIRED LIBRARIES   *******************************
 
 #ifdef TM1638               // Keyboard / display / LED combo board
-#include <TM1638plus.h>     //  By Gavin Lyons - https://github.com/gavinlyonsrepo/TM1638plus
+#include <LiquidCrystal.h>     //  By Gavin Lyons - https://github.com/gavinlyonsrepo/TM1638plus
 #endif                      
 
 #ifdef BoschBMxSensor       // Temperature / humidity / pressure
@@ -275,8 +275,19 @@
 #define dispBufferLength 12
 #endif
 
+//LCD pin to Arduino
+const int pin_RS = 8; 
+const int pin_EN = 9; 
+const int pin_d4 = 4; 
+const int pin_d5 = 5; 
+const int pin_d6 = 6; 
+const int pin_d7 = 7; 
+const int pin_BL = 10;
+
 #ifdef TM1638
-TM1638plus tm(pin_Strobe_TM, pin_Clock_TM , pin_DIO_TM);  //Constructor object
+// TM1638plus tm(pin_Strobe_TM, pin_Clock_TM , pin_DIO_TM);  //Constructor object
+// 1602 LCD Keypad
+LiquidCrystal lcd( pin_RS, pin_EN, pin_d4, pin_d5,  pin_d6, pin_d7);
 #endif
 
 
@@ -1091,6 +1102,12 @@ void setup() {
 // stepper.setMaxSpeed(3500);
 // stepper.setAcceleration(20000);
 // stepper.moveTo(0);
+// lcd setup
+ lcd.begin(16, 2);
+ lcd.setCursor(0,0);
+ lcd.print("MEVD by Qasim");
+ lcd.setCursor(0,1);
+ lcd.print("Press Key:");
 }
 
 void limitValues(float &B,float &V,float &C,float &D,float &E) // prevent values from going outside of their respective limits 
